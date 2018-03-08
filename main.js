@@ -24,10 +24,13 @@ var server = http.createServer((req, res) => {
   console.log(new Date())
   var selected = 1
   for (var project in config.projects) {
-    if (project.url === req.url) selected = project
+    if (project.url === req.url) {
+      selected = project
+      console.log('selected' + req.url)
+    }
   }
   if (selected === 1) {
-    req.end('illegal request')
+    res.end('illegal request')
     console.log(req.url + 'is illegal')
     return
   }
