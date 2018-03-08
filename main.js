@@ -1,5 +1,9 @@
 var http = require('http')
+var crypto = require('crypto')
 var config = require('./config.json')
+
+console.log(crypto.createHash('sha1').update('12138').digest('hex'))
+
 var server = http.createServer((req, res) => {
   console.log(req.headers)
   console.log(req.url)

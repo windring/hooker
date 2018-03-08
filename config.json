@@ -1,7 +1,7 @@
 {
   "name": "name",
   "execFile": "./sh/main.sh",
-  "key": "secrect",
+  "key": "secret",
   "path": "/hooker",
   "port": "1141",
   "event": ["push"]
