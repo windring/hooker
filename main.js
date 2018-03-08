@@ -13,4 +13,6 @@ var server = http.createServer((req, res) => {
   }
   res.end()
 })
-server.listen(1141, '0.0.0.0')
+server.listen(1141, '0.0.0.0', () => {
+  console.log('listening 1141')
+})
