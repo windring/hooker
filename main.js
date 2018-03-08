@@ -4,7 +4,7 @@ var config = require('./config.json')
 
 function getHash (str) {
   var hmac = crypto.createHmac('sha1', config.secret)
-  hmac.update()
+  hmac.update(str)
   return hmac.digest('hex')
 }
 
@@ -20,12 +20,13 @@ function exec () {
 }
 
 var server = http.createServer((req, res) => {
+  console.log('ping!')
   console.log(new Date())
   req.on('data', (data) => {
     console.log(data)
-    // if (!req.headers['x-github-event']) return
+    if (!req.headers['x-github-event']) return
     console.log(req.headers['x-github-event'])
-    // if (!~config.event.indexOf(req.headers['x-github-event'])) return
+    if (!~config.event.indexOf(req.headers['x-github-event'])) return
     console.log('to get hash')
     var hash = getHash(data.toString())
     console.log(hash)
