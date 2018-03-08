@@ -2,15 +2,15 @@ var http = require('http')
 var crypto = require('crypto')
 var config = require('./config.json')
 
-function getHash (alg, str) {
-  var hmac = crypto.createHmac(alg, config.secret)
+function getHash (alg, str, secret) {
+  var hmac = crypto.createHmac(alg, secret)
   hmac.update(str)
   return hmac.digest('hex').toString()
 }
 
-function exec () {
+function exec (file) {
   var exec = require('child_process')
-  exec.execFile('./sh/main.sh', (error, stdout, stderr) => {
+  exec.execFile(file, (error, stdout, stderr) => {
     if (error) {
       console.log(error)
       throw error
@@ -22,7 +22,11 @@ function exec () {
 var server = http.createServer((req, res) => {
   console.log('ping!')
   console.log(new Date())
-  if (req.url !== config.url) {
+  var selected = 1
+  for (var project in config.projects) {
+    if (project.url === req.url) selected = project
+  }
+  if (selected === 1) {
     req.end('illegal request')
     console.log(req.url + 'is illegal')
     return
@@ -30,14 +34,14 @@ var server = http.createServer((req, res) => {
   req.on('data', (data) => {
     if (!req.headers['x-github-event']) return
     console.log(req.headers['x-github-event'])
-    if (!~config.event.indexOf(req.headers['x-github-event'])) return
+    if (!~selected.event.indexOf(req.headers['x-github-event'])) return
     console.log('to get hash')
     var [alg, reqhash] = req.headers['x-hub-signature'].split('=')
-    var pashash = getHash(alg, data)
+    var pashash = getHash(alg, data, selected.secret)
     console.log('reqhash=' + reqhash)
     console.log('pashash=' + pashash)
     if (pashash !== reqhash) return
-    exec()
+    exec(selected.execFile)
   })
   req.on('end', () => {
     console.log('end')

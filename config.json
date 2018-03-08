@@ -1,8 +1,16 @@
 {
-  "name": "name",
-  "execFile": "./sh/main.sh",
-  "secret": "12138",
-  "url": "/hooker",
   "port": "1141",
-  "event": ["push"]
+  "projects": [{
+    "name": "name",
+    "url": "/hooker",
+    "secret": "12138",
+    "execFile": "./sh/main.sh",
+    "event": ["push"]
+  }, {
+    "name": "name",
+    "url": "/hooker",
+    "secret": "12138",
+    "execFile": "./sh/main.sh",
+    "event": ["push"]
+  }]
 }
