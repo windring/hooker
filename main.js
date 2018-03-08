@@ -22,16 +22,21 @@ function exec () {
 var server = http.createServer((req, res) => {
   console.log('ping!')
   console.log(new Date())
+  if (req.url !== config.url) {
+    req.end('illegal request')
+    console.log(req.url + 'is illegal')
+    return
+  }
   req.on('data', (data) => {
-    console.log(data)
     if (!req.headers['x-github-event']) return
     console.log(req.headers['x-github-event'])
     if (!~config.event.indexOf(req.headers['x-github-event'])) return
     console.log('to get hash')
-    var [alg, githash] = req.headers['x-hub-signature'].split('=')
-    var hash = getHash(alg, data)
-    console.log(hash)
-    if (hash !== githash) return
+    var [alg, reqhash] = req.headers['x-hub-signature'].split('=')
+    var pashash = getHash(alg, data)
+    console.log('reqhash=' + reqhash)
+    console.log('pashash=' + pashash)
+    if (pashash !== reqhash) return
     exec()
   })
   req.on('end', () => {

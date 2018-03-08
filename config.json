@@ -2,7 +2,7 @@
   "name": "name",
   "execFile": "./sh/main.sh",
   "secret": "12138",
-  "path": "/hooker",
+  "url": "/hooker",
   "port": "1141",
   "event": ["push"]
 }
