@@ -8,6 +8,17 @@ function getHash (str) {
   return hmac.digest('hex')
 }
 
+function exec () {
+  var exec = require('child_process')
+  exec.execFile('./sh/main.sh', (error, stdout, stderr) => {
+    if (error) {
+      console.log(error)
+      throw error
+    }
+    console.log(stdout)
+  })
+}
+
 var server = http.createServer((req, res) => {
   req.on('data', (data) => {
     console.log(data)
@@ -17,19 +28,8 @@ var server = http.createServer((req, res) => {
     console.log('get hash')
     var hash = getHash(data.toString())
     console.log(hash)
+    exec()
   })
-  /*
-  if (req.url) {
-    var exec = require('child_process')
-    exec.execFile('./sh/main.sh', (error, stdout, stderr) => {
-      if (error) {
-        console.log(error)
-        throw error
-      }
-      console.log(stdout)
-    })
-  }
-  */
   res.end('get')
 })
 server.listen(config.port, () => {
