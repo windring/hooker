@@ -11,8 +11,8 @@ var server = http.createServer((req, res) => {
       console.log(stdout)
     })
   }
-  res.end()
+  res.end('get')
 })
-server.listen(1141, '0.0.0.0', () => {
+server.listen(1141, () => {
   console.log('listening 1141')
 })
