@@ -26,7 +26,7 @@ var server = http.createServer((req, res) => {
   for (var index in config.projects) {
     if (config.projects[index].url === req.url) {
       selected = config.projects[index]
-      console.log('selected' + req.url)
+      console.log('selected ' + req.url)
     }
   }
   if (selected === 1) {
@@ -36,7 +36,7 @@ var server = http.createServer((req, res) => {
   }
   req.on('data', (data) => {
     if (!req.headers['x-github-event']) return
-    console.log(req.headers['x-github-event'])
+    console.log('event:' + req.headers['x-github-event'])
     if (!~selected.event.indexOf(req.headers['x-github-event'])) return
     console.log('to get hash')
     var [alg, reqhash] = req.headers['x-hub-signature'].split('=')
@@ -44,10 +44,12 @@ var server = http.createServer((req, res) => {
     console.log('reqhash=' + reqhash)
     console.log('pashash=' + pashash)
     if (pashash !== reqhash) return
+    console.log('exec start')
     exec(selected.execFile)
+    console.log('exec end')
   })
   req.on('end', () => {
-    console.log('end')
+    console.log('request end')
   })
   res.end('get')
 })
