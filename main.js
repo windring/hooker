@@ -25,7 +25,7 @@ var server = http.createServer((req, res) => {
     //if (!req.headers['x-github-event']) return
     console.log(req.headers['x-github-event'])
     //if (!~config.event.indexOf(req.headers['x-github-event'])) return
-    console.log('get hash')
+    console.log('to get hash')
     var hash = getHash(data.toString())
     console.log(hash)
     exec()
