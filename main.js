@@ -1,4 +1,5 @@
 var http = require('http')
+var config = require('./config.json')
 var server = http.createServer((req, res) => {
   console.log(req.headers)
   console.log(req.url)
@@ -17,6 +18,6 @@ var server = http.createServer((req, res) => {
   }
   res.end('get')
 })
-server.listen(1141, () => {
-  console.log('listening 1141')
+server.listen(config.port, () => {
+  console.log('listening ' + config.port)
 })
