@@ -1,7 +1,7 @@
 {
   "port": "1141",
   "projects": [{
-    "name": "name",
+    "name": "hooker",
     "url": "/hooker",
     "secret": "12138",
     "execFile": "./sh/main.sh",
