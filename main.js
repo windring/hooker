@@ -23,15 +23,15 @@ var server = http.createServer((req, res) => {
   console.log('ping!')
   console.log(new Date())
   var selected = 1
-  for (var project in config.projects) {
-    if (project.url === req.url) {
-      selected = project
+  for (var index in config.projects) {
+    if (config.projects[index].url === req.url) {
+      selected = config.projects[index]
       console.log('selected' + req.url)
     }
   }
   if (selected === 1) {
     res.end('illegal request')
-    console.log(req.url + 'is illegal')
+    console.log(req.url + ' is illegal')
     return
   }
   req.on('data', (data) => {
