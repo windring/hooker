@@ -3,8 +3,8 @@
   "projects": [{
     "name": "hooker",
     "url": "/hooker",
-    "secret": "12138",
-    "execFile": "./sh/main.sh",
+    "secret": "dfsdfsdf",
+    "execFile": "./sh/hooker.sh",
     "event": ["push"]
   }, {
     "name": "name",
